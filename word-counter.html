@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Counter — Free Online Tool | QuickText Tools</title>
+<meta name="description" content="Count words, characters, sentences, and reading time instantly. Free, no sign-up, works in your browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="brand" href="/">QuickText Tools</a>
+    <nav><a href="/">All tools</a></nav>
+  </header>
+
+  <h1 class="hero">Word Counter</h1>
+  <p class="lede">Paste or type your text below. Counts update as you type.</p>
+
+  <div class="tool-area">
+    <textarea id="input" placeholder="Start typing or paste your text here…" aria-label="Text to count"></textarea>
+    <div class="stats">
+      <div><strong id="words">0</strong>words</div>
+      <div><strong id="chars">0</strong>characters</div>
+      <div><strong id="charsNoSpace">0</strong>characters (no spaces)</div>
+      <div><strong id="sentences">0</strong>sentences</div>
+      <div><strong id="readTime">0s</strong>reading time</div>
+    </div>
+  </div>
+
+  <section class="info">
+    <h2>About this tool</h2>
+    <p>This word counter runs entirely in your browser — your text is never sent anywhere, so it's safe to paste drafts, essays, or anything private. It counts words by splitting on whitespace, characters both with and without spaces, sentences by terminal punctuation, and estimates reading time at 200 words per minute, the commonly used average adult reading speed.</p>
+  </section>
+
+  <footer class="site">&copy; 2026 QuickText Tools.</footer>
+</div>
+
+<script>
+const input = document.getElementById('input');
+function update() {
+  const text = input.value;
+  const trimmed = text.trim();
+  const words = trimmed ? trimmed.split(/\s+/).length : 0;
+  const chars = text.length;
+  const charsNoSpace = text.replace(/\s/g, '').length;
+  const sentences = trimmed ? (trimmed.match(/[.!?]+(\s|$)/g) || []).length || (trimmed ? 1 : 0) : 0;
+  const minutes = words / 200;
+  const readTime = minutes < 1 ? Math.max(1, Math.round(minutes * 60)) + 's' : Math.round(minutes) + ' min';
+
+  document.getElementById('words').textContent = words;
+  document.getElementById('chars').textContent = chars;
+  document.getElementById('charsNoSpace').textContent = charsNoSpace;
+  document.getElementById('sentences').textContent = sentences;
+  document.getElementById('readTime').textContent = readTime;
+}
+input.addEventListener('input', update);
+update();
+</script>
+</body>
+</html>
